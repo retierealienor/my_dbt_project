@@ -3,7 +3,7 @@ WITH base AS (
         customer_state   AS state,
         category_name,
         COUNT(DISTINCT order_id)  AS nb_commandes,
-        SUM(montant_ligne)        AS ca_global
+        SUM(total_order)        AS ca_global
 
     FROM {{ ref('int_localbike_orders_enriched') }}
 

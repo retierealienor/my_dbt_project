@@ -12,7 +12,7 @@ SELECT
     oi.quantity,
     oi.list_price,
     oi.discount,
-    oi.list_price * oi.quantity * (1 - oi.discount)              AS montant_order,
+    oi.list_price * oi.quantity * (1 - oi.discount)              AS total_order,
     p.product_name,
     p.model_year,
     c.category_id,
