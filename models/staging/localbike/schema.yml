@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: stg_localbike_brands
+    description: "This model contains information about the brands sold by Local Bike"
+    columns:
+      - name: brand_id
+        description: "Primary key, unique identifier for each brand"
+        tests:
+            - unique
+            - not_null
+  
+  - name: stg_localbike_categories
+    description: "This model contains information about the categories of bike sold by Local Bike"
+    columns:
+      - name: category_id
+        description: "Primary key, unique identifier for each categorie"
+        tests:
+            - unique
+            - not_null
+  
+  - name: stg_localbike_customers
+    description: "This model contains information about the customers"
+    columns:
+      - name: customer_id
+        description: "Primary key, unique identifier for each customer"
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_localbike_order_items
+    description: "This model contains information about the orders items"
+    columns:
+      - name: order_item_unique_id
+        description: "Primary key, unique identifier for each item based on product_id, item_id and order_id"
+        tests:
+            - unique
+            - not_null
+      - name: item_id
+        description: "Foreign key linking the product to the corresponding order."
+        tests:
+          - relationships:
+              name: item_id_foreign_key_in_stg_localbike_order_item
+              arguments:
+                to: ref('stg_localbike_products')
+                field: product_id
+
+  - name: stg_localbike_orders
+    description: "This model contains information about the orders"
+    columns:
+      - name: order_id
+        description: "Primary key, unique identifier for each order"
+        tests:
+            - unique
+            - not_null
+      - name: staff_id
+        description: "Foreign key linking the order to the corresponding staff member who sold it."
+        tests:
+          - relationships:
+              name: staff_id_foreign_key_in_stg_localbike_orders
+              arguments:
+                to: ref('stg_localbike_staffs')
+                field: staff_id
+      - name: store_id
+        description: "Foreign key linking the order to the corresponding store who sold it."
+        tests:
+          - relationships:
+              name: store_id_foreign_key_in_stg_localbike_orders
+              arguments:
+                to: ref('stg_localbike_stores')
+                field: store_id
+      - name: customer_id
+        description: "Foreign key linking the order to the corresponding customer who bought it."
+        tests:
+          - relationships:
+              name: customer_id_foreign_key_in_stg_localbike_orders
+              arguments:
+                to: ref('stg_localbike_customers')
+                field: customer_id
+  
+  - name: stg_localbike_products
+    description: "This model contains information about the products"
+    columns:
+      - name: product_id
+        description: "Primary key, unique identifier for each product"
+        tests:
+            - unique
+            - not_null
+      - name: brand_id
+        description: "Foreign key linking the product to the corresponding brand."
+        tests:
+          - relationships:
+              name: brand_id_foreign_key_in_stg_localbike_products
+              arguments:
+                to: ref('stg_localbike_brands')
+                field: brand_id
+      - name: category_id
+        description: "Foreign key linking the product to the corresponding category."
+        tests:
+          - relationships:
+              name: category_id_foreign_key_in_stg_localbike_products
+              arguments:
+                to: ref('stg_localbike_categories')
+                field: category_id
+
+  - name: stg_localbike_staffs
+    description: "This model contains information about the staffs working at Local Bike"
+    columns:
+      - name: staff_id
+        description: "Primary key, unique identifier for each staff"
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_localbike_stores
+    description: "This model contains information about the stores of Local Bike"
+    columns:
+      - name: store_id
+        description: "Primary key, unique identifier for each store based on product_id and store_id"
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_localbike_stocks
+    description: "This model contains information about the stocks by store and product"
+    columns:
+      - name: stock_unique_id
+        description: "Primary key, unique identifier for stock based on store_id and product_id"
+        tests:
+            - unique
+            - not_null
