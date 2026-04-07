@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: mart_sales_by_state
+    description: '{{ doc("mart_sales_by_state") }}'
