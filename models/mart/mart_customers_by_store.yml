@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: mart_customers_by_store
+    description: '{{ doc("mart_customers_by_store") }}'
